@@ -66,6 +66,12 @@ def _read_annotations(csv_reader, classes):
         x2 = _parse(x2, int, 'line {}: malformed x2: {{}}'.format(line))
         y2 = _parse(y2, int, 'line {}: malformed y2: {{}}'.format(line))
 
+        # Check that the bounding box is valid.
+        if x2 <= x1:
+            raise ValueError('line {}: x2 ({}) must be higher than x1 ({})'.format(line, x2, x1))
+        if y2 <= y1:
+            raise ValueError('line {}: y2 ({}) must be higher than y1 ({})'.format(line, y2, y1))
+
         # check if the current class name is correctly present
         if class_name not in classes:
             raise ValueError('line {}: unknown class name: {}'.format(line, class_name))
