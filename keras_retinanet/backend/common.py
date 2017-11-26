@@ -21,18 +21,15 @@ import numpy as np
 
 
 def bbox_transform_inv(boxes, deltas):
-    boxes  = keras.backend.reshape(boxes, (-1, 4))
-    deltas = keras.backend.reshape(deltas, (-1, 4))
+    widths  = boxes[:, :, 2] - boxes[:, :, 0]
+    heights = boxes[:, :, 3] - boxes[:, :, 1]
+    ctr_x   = boxes[:, :, 0] + 0.5 * widths
+    ctr_y   = boxes[:, :, 1] + 0.5 * heights
 
-    widths  = boxes[:, 2] - boxes[:, 0]
-    heights = boxes[:, 3] - boxes[:, 1]
-    ctr_x   = boxes[:, 0] + 0.5 * widths
-    ctr_y   = boxes[:, 1] + 0.5 * heights
-
-    dx = deltas[:, 0]
-    dy = deltas[:, 1]
-    dw = deltas[:, 2]
-    dh = deltas[:, 3]
+    dx = deltas[:, :, 0]
+    dy = deltas[:, :, 1]
+    dw = deltas[:, :, 2]
+    dh = deltas[:, :, 3]
 
     pred_ctr_x = ctr_x + dx * widths
     pred_ctr_y = ctr_y + dy * heights
@@ -44,8 +41,7 @@ def bbox_transform_inv(boxes, deltas):
     pred_boxes_x2 = pred_ctr_x + 0.5 * pred_w
     pred_boxes_y2 = pred_ctr_y + 0.5 * pred_h
 
-    pred_boxes = keras.backend.stack([pred_boxes_x1, pred_boxes_y1, pred_boxes_x2, pred_boxes_y2], axis=1)
-    pred_boxes = keras.backend.expand_dims(pred_boxes, axis=0)
+    pred_boxes = keras.backend.stack([pred_boxes_x1, pred_boxes_y1, pred_boxes_x2, pred_boxes_y2], axis=2)
 
     return pred_boxes
 
