@@ -1,0 +1,28 @@
+[[source]]
+
+verify_ssl = true
+name = "pypi"
+url = "https://pypi.python.org/simple"
+
+
+[requires]
+
+python_version = "3.5"
+
+
+[dev-packages]
+
+ipdb = "*"
+
+
+[packages]
+
+opencv-python = "*"
+matplotlib = "*"
+numpy = "*"
+keras = "==2.0.9"
+keras-resnet = {git = "https://github.com/broadinstitute/keras-resnet"}
+cython = "*"
+"h5py" = "*"
+tensorflow-gpu = "*"
+pycocotools = {subdirectory = "PythonAPI", git = "https://github.com/cocodataset/cocoapi"}
