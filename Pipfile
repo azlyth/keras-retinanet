@@ -26,3 +26,4 @@ cython = "*"
 "h5py" = "*"
 tensorflow-gpu = "*"
 pycocotools = {subdirectory = "PythonAPI", git = "https://github.com/cocodataset/cocoapi"}
+pillow = "*"
